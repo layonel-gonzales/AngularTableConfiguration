@@ -2,67 +2,44 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfigGithub } from './app/app.config.github';
 import { App } from './app/app';
 
-// Debug information for mobile
-console.log('Location:', window.location.href);
-console.log('User Agent:', navigator.userAgent);
-console.log('Screen size:', window.screen.width + 'x' + window.screen.height);
-
-// Error handling for mobile debugging
+// Simple error handling
 window.addEventListener('error', (event) => {
-  console.error('Global error:', event.error);
-  console.error('Error stack:', event.error?.stack);
+  console.error('Error:', event.error);
 });
 
 window.addEventListener('unhandledrejection', (event) => {
-  console.error('Unhandled promise rejection:', event.reason);
+  console.error('Promise rejection:', event.reason);
 });
 
-// Prevent infinite reloads
-let reloadCount = parseInt(sessionStorage.getItem('reloadCount') || '0');
-if (reloadCount > 3) {
-  console.error('Too many reloads detected, stopping...');
-  const errorDiv = document.createElement('div');
-  errorDiv.innerHTML = `
-    <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif; background: #f8f9fa; margin: 20px; border-radius: 8px;">
-      <h2 style="color: #e74c3c;">Error de carga detectado</h2>
-      <p>La aplicación ha intentado cargar demasiadas veces.</p>
-      <button onclick="sessionStorage.removeItem('reloadCount'); window.location.reload()" 
-              style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; margin: 5px;">
-        Intentar de nuevo
-      </button>
-      <button onclick="window.location.href='/AngularTableConfiguration/'" 
-              style="padding: 10px 20px; background: #2ecc71; color: white; border: none; border-radius: 4px; cursor: pointer; margin: 5px;">
-        Ir al inicio
-      </button>
-    </div>
-  `;
-  document.body.appendChild(errorDiv);
-} else {
-  sessionStorage.setItem('reloadCount', String(reloadCount + 1));
-  
-  // Log initialization
-  console.log('Starting Angular application for GitHub Pages...');
+console.log('Iniciando aplicación Angular...');
 
-  bootstrapApplication(App, appConfigGithub)
-    .then(() => {
-      console.log('Angular application started successfully');
-      // Clear reload count on successful start
-      sessionStorage.removeItem('reloadCount');
-    })
-    .catch((err) => {
-      console.error('Failed to start Angular application:', err);
-      // Show error message to user
-      const errorDiv = document.createElement('div');
-      errorDiv.innerHTML = `
-        <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif; background: #f8f9fa; margin: 20px; border-radius: 8px;">
-          <h2 style="color: #e74c3c;">Error al cargar la aplicación</h2>
-          <p>Error: ${err.message || 'Error desconocido'}</p>
-          <button onclick="sessionStorage.removeItem('reloadCount'); window.location.reload()" 
-                  style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">
-            Recargar
+bootstrapApplication(App, appConfigGithub)
+  .then(() => {
+    console.log('✅ Aplicación iniciada correctamente');
+  })
+  .catch((err) => {
+    console.error('❌ Error al iniciar aplicación:', err);
+    
+    // Mostrar error simple al usuario
+    const appRoot = document.querySelector('app-root');
+    if (appRoot) {
+      appRoot.innerHTML = `
+        <div style="padding: 40px; text-align: center; font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto;">
+          <h2 style="color: #e74c3c; margin-bottom: 20px;">⚠️ Error de carga</h2>
+          <p style="color: #666; margin-bottom: 30px;">No se pudo cargar la aplicación. Esto puede deberse a problemas de red o compatibilidad del navegador.</p>
+          <button onclick="window.location.reload()" 
+                  style="padding: 12px 24px; background: #3498db; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin-right: 10px;">
+            🔄 Reintentar
           </button>
+          <a href="https://layonel-gonzales.github.io/AngularTableConfiguration/" 
+             style="padding: 12px 24px; background: #2ecc71; color: white; text-decoration: none; border-radius: 6px; font-size: 16px;">
+            🏠 Ir al inicio
+          </a>
+          <details style="margin-top: 20px; text-align: left;">
+            <summary style="cursor: pointer; color: #666;">Ver detalles técnicos</summary>
+            <pre style="background: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 12px;">${err.message || err}</pre>
+          </details>
         </div>
       `;
-      document.body.appendChild(errorDiv);
-    });
-}
+    }
+  });
