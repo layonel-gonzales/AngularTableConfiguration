@@ -313,6 +313,8 @@
                 currentUser = username;
                 errorElement.style.display = 'none';
                 
+                console.log(`✅ Login exitoso: ${username}`);
+                
                 // Cargar configuración de columnas del usuario
                 loadUserColumnConfig();
                 
@@ -323,19 +325,25 @@
                 
                 // Renderizar tabla
                 renderTable();
+                
+                console.log(`🎯 Dashboard cargado para ${username}`);
             } else {
                 errorElement.textContent = 'Usuario o contraseña incorrectos';
                 errorElement.style.display = 'block';
+                console.log(`❌ Login fallido para: ${username}`);
             }
         }
 
         function logout() {
+            console.log(`👋 ${currentUser} cerrando sesión`);
             currentUser = null;
+            currentColumns = [...allColumns]; // Reset a configuración default
             document.getElementById('loginSection').style.display = 'block';
             document.getElementById('dashboardSection').style.display = 'none';
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
             document.getElementById('columnConfig').style.display = 'none';
+            console.log('🔄 Sesión cerrada, volviendo al login');
         }
 
         function loadUserColumnConfig() {
@@ -343,20 +351,29 @@
             if (savedConfig) {
                 try {
                     const parsedConfig = JSON.parse(savedConfig);
+                    // Actualizar currentColumns basado en la configuración guardada
                     currentColumns = allColumns.map(col => {
                         const savedCol = parsedConfig.find(c => c.key === col.key);
-                        return savedCol ? savedCol : col;
+                        return {
+                            ...col,
+                            visible: savedCol ? savedCol.visible : true
+                        };
                     });
                 } catch (e) {
-                    currentColumns = [...allColumns];
+                    console.error('Error al cargar configuración:', e);
+                    currentColumns = allColumns.map(col => ({ ...col, visible: true }));
                 }
             } else {
-                currentColumns = [...allColumns];
+                // Si no hay configuración guardada, mostrar todas las columnas
+                currentColumns = allColumns.map(col => ({ ...col, visible: true }));
             }
+            
+            console.log(`📋 Configuración cargada para ${currentUser}:`, currentColumns);
         }
 
         function saveUserColumnConfig() {
             setCookie(`columnConfig_${currentUser}`, JSON.stringify(currentColumns), 365);
+            console.log(`💾 Configuración guardada para ${currentUser}:`, currentColumns);
         }
 
         function renderTable() {
@@ -399,14 +416,15 @@
             const container = document.getElementById('columnCheckboxes');
             container.innerHTML = '';
             
-            allColumns.forEach((col, index) => {
+            // Usar currentColumns para mantener consistencia con la tabla
+            currentColumns.forEach((col, index) => {
                 const div = document.createElement('div');
                 div.style.marginBottom = '8px';
                 
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.id = `col_${col.key}`;
-                checkbox.checked = col.visible;
+                checkbox.checked = col.visible; // Usar el estado actual del usuario
                 checkbox.onchange = () => toggleColumn(index);
                 
                 const label = document.createElement('label');
@@ -418,6 +436,8 @@
                 div.appendChild(label);
                 container.appendChild(div);
             });
+            
+            console.log('🔄 Checkboxes renderizados para:', currentUser, currentColumns.map(c => `${c.label}: ${c.visible}`));
         }
 
         function toggleColumn(index) {
@@ -430,37 +450,36 @@
         }
 
         function saveColumnConfig() {
-            // Actualizar allColumns con currentColumns
-            allColumns.forEach((col, index) => {
-                col.visible = currentColumns[index].visible;
-            });
-            
+            // Guardar la configuración actual del usuario
             saveUserColumnConfig();
             renderTable();
             
             // Mostrar mensaje de éxito
             const message = document.getElementById('configMessage');
-            message.textContent = '✅ Configuración guardada correctamente';
+            message.textContent = `✅ Configuración guardada para ${currentUser}`;
             message.style.display = 'block';
             setTimeout(() => {
                 message.style.display = 'none';
             }, 3000);
             
             toggleColumnConfig();
+            console.log(`💾 Configuración guardada exitosamente para ${currentUser}`);
         }
 
         function resetColumns() {
-            currentColumns = allColumns.map(col => ({ ...col, visible: true }));
-            allColumns.forEach(col => col.visible = true);
+            // Restablecer todas las columnas como visibles para el usuario actual
+            currentColumns = currentColumns.map(col => ({ ...col, visible: true }));
             saveUserColumnConfig();
             renderTable();
             
             const message = document.getElementById('configMessage');
-            message.textContent = '🔄 Columnas restablecidas';
+            message.textContent = `🔄 Columnas restablecidas para ${currentUser}`;
             message.style.display = 'block';
             setTimeout(() => {
                 message.style.display = 'none';
             }, 3000);
+            
+            console.log(`🔄 Columnas restablecidas para ${currentUser}`);
         }
 
         // Cookie utilities
