@@ -19,7 +19,7 @@ git add .
 git commit -m "Initial commit - Angular Table App for GitHub Pages"
 
 # Conectar con repositorio remoto
-git remote add origin https://github.com/TU_USUARIO/angularTable.git
+git remote add origin https://github.com/layonel-gonzales/AngularTableConfiguration.git
 
 # Subir a GitHub
 git push -u origin main
@@ -78,7 +78,7 @@ npm run build:github
 
 Tu aplicación estará disponible en:
 ```
-https://TU_USUARIO.github.io/angularTable/
+https://layonel-gonzales.github.io/AngularTableConfiguration/
 ```
 
 ### 8. **Comandos Útiles**
@@ -113,7 +113,7 @@ npx http-server -p 8080
 **Solución:** GitHub Pages automáticamente redirige 404 a index.html
 
 **Problema:** Base href incorrecta
-**Solución:** Verificar que el repositorio se llame "angularTable"
+**Solución:** Verificar que el repositorio se llame "AngularTableConfiguration"
 
 **Problema:** CSS/JS no cargan
 **Solución:** Verificar base-href en angular.json
