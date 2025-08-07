@@ -70,7 +70,8 @@
               ],
               "outputHashing": "all",
               "optimization": true,
-              "prerender": false
+              "prerender": false,
+              "ssr": false
             },
             "development": {
               "optimization": false,
