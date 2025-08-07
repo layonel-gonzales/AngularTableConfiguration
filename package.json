@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:github": "ng build --configuration github --base-href '/AngularTableConfiguration/'",
+    "build:github": "ng build --configuration github --base-href='/AngularTableConfiguration/' --output-path=dist/angular-table-app/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:angular-table-app": "node dist/angular-table-app/server/server.mjs"
