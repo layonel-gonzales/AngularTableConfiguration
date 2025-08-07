@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Angular Table App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="2; url=app.html">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -11,15 +12,17 @@
       padding: 20px;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .container {
-      max-width: 600px;
-      margin: 50px auto;
       background: white;
       border-radius: 12px;
-      padding: 30px;
+      padding: 40px;
       box-shadow: 0 15px 35px rgba(0,0,0,0.1);
       text-align: center;
+      max-width: 500px;
     }
     .loading {
       display: inline-block;
@@ -44,8 +47,6 @@
       border-radius: 6px;
       margin: 10px;
       font-weight: bold;
-      border: none;
-      cursor: pointer;
     }
     .btn:hover { background: #2980b9; }
     .btn.primary { background: #e74c3c; }
@@ -56,45 +57,35 @@
   <div class="container">
     <h1>🚀 Angular Table App</h1>
     <div class="loading"></div>
-    <p>Cargando aplicación Angular...</p>
-    
-    <div id="error-message" style="display: none;">
-      <h2 style="color: #e74c3c;">⚠️ Error de carga</h2>
-      <p>La aplicación Angular no se pudo cargar correctamente.</p>
-      <button onclick="window.location.reload()" class="btn">🔄 Recargar</button>
-      <a href="https://github.com/layonel-gonzales/AngularTableConfiguration" class="btn">📱 Ver código</a>
-    </div>
+    <p>Redirigiendo a la aplicación...</p>
+    <p><small>Si no eres redirigido automáticamente:</small></p>
+    <a href="app.html" class="btn primary">📱 Abrir Aplicación</a>
     
     <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px; text-align: left;">
-      <h3>📱 Aplicación Móvil Lista</h3>
-      <p><strong>Características:</strong></p>
-      <ul>
-        <li>✅ Login con usuarios demo</li>
-        <li>✅ Tabla con 6 columnas configurables</li>
-        <li>✅ Configuración guardada por usuario</li>
-        <li>✅ Diseño responsive para móviles</li>
-      </ul>
-      
-      <h4>👤 Usuarios de prueba:</h4>
+      <h3>✨ Aplicación Lista para Móvil</h3>
+      <p><strong>Credenciales de prueba:</strong></p>
       <ul>
         <li><strong>admin</strong> / admin123</li>
         <li><strong>usuario1</strong> / pass123</li>
         <li><strong>demo</strong> / demo123</li>
       </ul>
+      
+      <p><strong>Características:</strong></p>
+      <ul>
+        <li>✅ Login funcional</li>
+        <li>✅ Tabla con 6 columnas</li>
+        <li>✅ Configuración por usuario</li>
+        <li>✅ Persistencia en cookies</li>
+        <li>✅ Diseño responsive</li>
+      </ul>
     </div>
   </div>
 
   <script>
-    // Intentar cargar Angular después de 2 segundos
-    setTimeout(function() {
-      // Si llegamos aquí, Angular no cargó
-      document.getElementById('error-message').style.display = 'block';
-      document.querySelector('.loading').style.display = 'none';
-    }, 10000); // 10 segundos timeout
-    
-    console.log('🔧 Página de fallback cargada');
-    console.log('📍 URL:', window.location.href);
-    console.log('🌐 User Agent:', navigator.userAgent);
+    console.log('� Redirigiendo a app.html...');
+    setTimeout(() => {
+      window.location.href = 'app.html';
+    }, 2000);
   </script>
 </body>
 </html>
