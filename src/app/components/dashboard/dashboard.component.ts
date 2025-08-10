@@ -73,24 +73,31 @@ import { TableConfigComponent } from '../table-config/table-config.component';
           (closeConfig)="toggleConfig()">
         </app-table-config>
 
-        <div class="table-container">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th *ngFor="let column of visibleColumns">{{ column.label }}</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let employee of paginatedEmployees">
-                  <td *ngFor="let column of visibleColumns">
-                    {{ getEmployeeValue(employee, column.key) }}
-                  </td>
-                </tr>
-            </tbody>
-          </table>
+        <!-- CONTENEDOR DE TABLA CON SCROLL HORIZONTAL -->
+        <div class="table-wrapper">
+          <div class="table-container">
+            <div class="table-scroll-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th *ngFor="let column of visibleColumns">{{ column.label }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let employee of paginatedEmployees">
+                      <td *ngFor="let column of visibleColumns">
+                        {{ getEmployeeValue(employee, column.key) }}
+                      </td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
-          <!-- PAGINACIÓN MODERNA -->
-          <div class="pagination-container" *ngIf="totalItems > 0">
+        <!-- PAGINACIÓN SEPARADA Y FIJA EN MÓVILES -->
+        <div class="pagination-wrapper" *ngIf="totalItems > 0">
+          <div class="pagination-container">
             <!-- Información de resultados -->
             <div class="pagination-info">
               <span>Mostrando {{ startItem }} - {{ endItem }} de {{ totalItems }} empleados</span>

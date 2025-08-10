@@ -255,20 +255,7 @@
 
 
 
-.table-container {
-  background: var(--bg-primary);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-  border: 1px solid var(--border-light);
-}
 
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-  table-layout: auto;
-}
 
 .data-table thead {
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
@@ -343,6 +330,69 @@
   text-align: right;
   font-weight: 600;
   color: var(--accent-color);
+}
+
+/* ===== NUEVOS ESTILOS PARA SCROLL HORIZONTAL Y PAGINACIÓN FIJA ===== */
+
+/* Contenedor principal de la tabla */
+.table-wrapper {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.table-container {
+  background: var(--bg-primary);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-light);
+  border-bottom: none;
+}
+
+/* Contenedor con scroll horizontal solo para la tabla */
+.table-scroll-container {
+  overflow-x: auto;
+  overflow-y: visible;
+  width: 100%;
+  /* Mejoras para el scroll en móviles */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-medium) var(--bg-tertiary);
+}
+
+.table-scroll-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-scroll-container::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.table-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 4px;
+}
+
+.table-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+/* Contenedor de paginación separado */
+.pagination-wrapper {
+  width: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-top: none;
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Tabla con ancho mínimo para scroll horizontal */
+.data-table {
+  width: 100%;
+  min-width: 800px; /* Ancho mínimo para forzar scroll horizontal en móviles */
+  border-collapse: collapse;
+  font-size: 14px;
+  table-layout: auto;
 }
 
 /* Responsive design */
@@ -664,5 +714,102 @@
   .page-size-select {
     padding: 4px 8px;
     font-size: 12px;
+  }
+}
+
+/* ===== ESTILOS ESPECÍFICOS PARA PAGINACIÓN FIJA EN MÓVILES ===== */
+
+/* Aplicar paginación fija solo en pantallas móviles */
+@media (max-width: 768px) {
+  /* Agregar padding inferior al main para espacio de paginación fija */
+  .dashboard-main {
+    padding-bottom: 100px !important;
+  }
+  
+  /* Hacer la paginación fija en móviles */
+  .pagination-wrapper {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    border-top: 2px solid var(--border-medium) !important;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15) !important;
+    backdrop-filter: blur(10px) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+  }
+  
+  .pagination-container {
+    padding: 12px 15px !important;
+    border-top: none !important;
+    background: transparent !important;
+    margin-top: 0 !important;
+  }
+  
+  /* Optimizar controles de paginación para móviles */
+  .pagination-controls {
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+  
+  .pagination-info {
+    font-size: 11px !important;
+    text-align: center !important;
+    margin-bottom: 8px !important;
+  }
+  
+  .page-size-selector {
+    order: 2 !important;
+  }
+  
+  .page-navigation {
+    order: 1 !important;
+    gap: 4px !important;
+  }
+  
+  .page-btn {
+    min-width: 32px !important;
+    height: 32px !important;
+    font-size: 11px !important;
+  }
+  
+  .page-btn-nav {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+  }
+}
+
+/* Ajustes específicos para móviles muy pequeños */
+@media (max-width: 480px) {
+  .dashboard-main {
+    padding-bottom: 110px !important;
+  }
+  
+  .pagination-container {
+    padding: 10px 12px !important;
+  }
+  
+  .pagination-controls {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  
+  .pagination-info {
+    order: 3 !important;
+    font-size: 10px !important;
+  }
+  
+  .page-btn {
+    min-width: 30px !important;
+    height: 30px !important;
+    font-size: 10px !important;
+  }
+  
+  .page-size-select {
+    padding: 4px 8px !important;
+    font-size: 11px !important;
   }
 }
