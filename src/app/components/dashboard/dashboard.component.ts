@@ -33,34 +33,36 @@ import { TableConfigComponent } from '../table-config/table-config.component';
           </div>
         </div>
 
-        <!-- CONTROLES Y FILTRO EN UNA LÍNEA -->
-        <div style="background: #f8f9fa; padding: 15px; margin: 15px 0; border: 1px solid #ddd; border-radius: 8px; display: flex; align-items: center; gap: 20px;">
-          <!-- Botones a la izquierda (uno arriba del otro) -->
-          <div style="display: flex; flex-direction: column; gap: 5px;">
+        <!-- CONTROLES Y FILTRO RESPONSIVO -->
+        <div class="controls-filter-container">
+          <!-- Botones de control -->
+          <div class="control-buttons">
             <button 
-              class="mini-btn" 
+              class="control-btn reset-btn" 
               (click)="resetUserConfig()" 
-              title="Restablecer mi configuración"
-              style="background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 6px 8px; font-size: 14px; cursor: pointer; transition: all 0.2s;">
+              title="Restablecer mi configuración">
               🔄
             </button>
             <button 
-              class="mini-btn" 
+              class="control-btn config-btn" 
               (click)="toggleConfig()"
-              title="Configurar Columnas"
-              style="background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 6px 8px; font-size: 14px; cursor: pointer; transition: all 0.2s;">
+              title="Configurar Columnas">
               ⚙️
             </button>
           </div>
           
-          <!-- Filtro después de los botones -->
-          <div style="position: relative; display: flex; align-items: center;">
-            <input 
-              type="text" 
-              placeholder="🔍 Buscar empleados..." 
-              [(ngModel)]="globalFilter"
-              style="padding: 10px 15px; font-size: 16px; width: 250px; border: 1px solid #ccc; border-radius: 4px; outline: none; transition: border-color 0.3s;"
-            />
+          <!-- Filtro responsivo que ocupa el resto del espacio -->
+          <div class="filter-container">
+            <div class="filter-input-wrapper">
+              <span class="filter-icon">🔍</span>
+              <input 
+                type="text" 
+                class="filter-input"
+                placeholder="Buscar empleados..." 
+                [(ngModel)]="globalFilter"
+                (input)="onFilterChange()"
+              />
+            </div>
           </div>
         </div>
 
@@ -79,13 +81,66 @@ import { TableConfigComponent } from '../table-config/table-config.component';
               </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let employee of filteredEmployees">
+                <tr *ngFor="let employee of paginatedEmployees">
                   <td *ngFor="let column of visibleColumns">
                     {{ getEmployeeValue(employee, column.key) }}
                   </td>
                 </tr>
             </tbody>
           </table>
+
+          <!-- PAGINACIÓN MODERNA -->
+          <div class="pagination-container" *ngIf="totalItems > 0">
+            <!-- Información de resultados -->
+            <div class="pagination-info">
+              <span>Mostrando {{ startItem }} - {{ endItem }} de {{ totalItems }} empleados</span>
+            </div>
+
+            <!-- Controles de paginación -->
+            <div class="pagination-controls">
+              <!-- Selector de elementos por página -->
+              <div class="page-size-selector">
+                <label>Mostrar:</label>
+                <select [(ngModel)]="itemsPerPage" (change)="changePageSize(itemsPerPage)" class="page-size-select">
+                  <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+                </select>
+              </div>
+
+              <!-- Navegación de páginas -->
+              <div class="page-navigation" *ngIf="totalPages > 1">
+                <!-- Botón anterior -->
+                <button 
+                  class="page-btn page-btn-nav" 
+                  [disabled]="currentPage === 1"
+                  (click)="previousPage()"
+                  title="Página anterior">
+                  ⟨
+                </button>
+
+                <!-- Números de página -->
+                <ng-container *ngFor="let pageNum of pageNumbers">
+                  <button 
+                    *ngIf="typeof pageNum === 'number'"
+                    class="page-btn"
+                    [class.active]="pageNum === currentPage"
+                    (click)="goToPage(pageNum)"
+                    [title]="'Página ' + pageNum">
+                    {{ pageNum }}
+                  </button>
+                  <span *ngIf="typeof pageNum === 'string'" class="page-dots">{{ pageNum }}</span>
+                </ng-container>
+
+                <!-- Botón siguiente -->
+                <button 
+                  class="page-btn page-btn-nav" 
+                  [disabled]="currentPage === totalPages"
+                  (click)="nextPage()"
+                  title="Página siguiente">
+                  ⟩
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
     </div>
@@ -103,6 +158,11 @@ export class DashboardComponent implements OnInit {
   columns: ColumnConfig[] = [];
   showConfig = false;
   globalFilter: string = '';
+
+  // Propiedades de paginación
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  pageSizeOptions: number[] = [5, 10, 15, 20];
 
   ngOnInit(): void {
     if (!this.authService.isAuthenticated()) {
@@ -131,6 +191,58 @@ export class DashboardComponent implements OnInit {
         return searchValue.includes(filter);
       })
     );
+  }
+
+  get paginatedEmployees(): Employee[] {
+    const filtered = this.filteredEmployees;
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return filtered.slice(startIndex, endIndex);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredEmployees.length / this.itemsPerPage);
+  }
+
+  get totalItems(): number {
+    return this.filteredEmployees.length;
+  }
+
+  get startItem(): number {
+    return (this.currentPage - 1) * this.itemsPerPage + 1;
+  }
+
+  get endItem(): number {
+    return Math.min(this.currentPage * this.itemsPerPage, this.totalItems);
+  }
+
+  get pageNumbers(): (number | string)[] {
+    const total = this.totalPages;
+    const current = this.currentPage;
+    const delta = 2; // Número de páginas a mostrar alrededor de la actual
+    
+    const range = [];
+    const rangeWithDots: (number | string)[] = [];
+
+    for (let i = Math.max(2, current - delta); i <= Math.min(total - 1, current + delta); i++) {
+      range.push(i);
+    }
+
+    if (current - delta > 2) {
+      rangeWithDots.push(1, '...');
+    } else {
+      rangeWithDots.push(1);
+    }
+
+    rangeWithDots.push(...range);
+
+    if (current + delta < total - 1) {
+      rangeWithDots.push('...', total);
+    } else if (total > 1) {
+      rangeWithDots.push(total);
+    }
+
+    return rangeWithDots.filter((v, i, a) => a.indexOf(v) === i && v !== 1 || i === 0);
   }
 
   loadData(): void {
@@ -172,6 +284,34 @@ export class DashboardComponent implements OnInit {
     }
     
     return value;
+  }
+
+  // Métodos de paginación
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  changePageSize(size: number): void {
+    this.itemsPerPage = size;
+    this.currentPage = 1; // Resetear a la primera página
+  }
+
+  onFilterChange(): void {
+    this.currentPage = 1; // Resetear a la primera página cuando se filtren los datos
   }
 
   logout(): void {
