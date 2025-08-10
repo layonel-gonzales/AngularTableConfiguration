@@ -1,0 +1,7 @@
+{
+  "routes": {
+    "/AngularTableConfiguration": {},
+    "/AngularTableConfiguration/dashboard": {},
+    "/AngularTableConfiguration/login": {}
+  }
+}
