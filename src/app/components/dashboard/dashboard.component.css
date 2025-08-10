@@ -303,3 +303,73 @@
     white-space: nowrap;
   }
 }
+
+/* Estilos para el filtro global - SIMPLE Y VISIBLE */
+.global-filter-container {
+  margin: 30px 0 !important;
+  padding: 30px !important;
+  background: red !important;
+  border: 5px solid blue !important;
+  text-align: center;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.global-filter-input {
+  width: 80% !important;
+  padding: 20px !important;
+  font-size: 20px !important;
+  border: 3px solid green !important;
+  background: yellow !important;
+  color: black !important;
+}
+
+.filter-results-info {
+  color: white !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  margin: 10px 0 !important;
+}
+
+@media (max-width: 768px) {
+  .global-filter-container {
+    margin: 15px 0;
+  }
+  
+  .global-filter-input {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+  
+  .filter-results-info {
+    font-size: 12px;
+  }
+}
+
+/* Estilos para los mini-botones de control */
+.mini-btn:hover {
+  background-color: #e9ecef !important;
+  transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mini-btn:active {
+  transform: scale(0.95);
+}
+
+/* Responsive para la barra de filtro y botones */
+@media (max-width: 768px) {
+  .filter-controls-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .filter-controls-row > div:first-child {
+    order: 2;
+  }
+  
+  .filter-controls-row > div:last-child {
+    order: 1;
+    justify-content: center;
+  }
+}

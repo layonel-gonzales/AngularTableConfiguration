@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { DataService, Employee } from '../../services/data.service';
@@ -9,7 +10,7 @@ import { TableConfigComponent } from '../table-config/table-config.component';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, TableConfigComponent],
+  imports: [CommonModule, FormsModule, TableConfigComponent],
   template: `
     <div class="dashboard-container">
       <header class="dashboard-header">
@@ -30,15 +31,36 @@ import { TableConfigComponent } from '../table-config/table-config.component';
               Configuración para: <strong>{{ currentUser.username }}</strong>
             </small>
           </div>
-          <div class="controls-buttons">
-            <button class="reset-btn" (click)="resetUserConfig()" title="Restablecer mi configuración">
-              <span class="reset-icon">🔄</span>
-              Restablecer
+        </div>
+
+        <!-- CONTROLES Y FILTRO EN UNA LÍNEA -->
+        <div style="background: #f8f9fa; padding: 15px; margin: 15px 0; border: 1px solid #ddd; border-radius: 8px; display: flex; align-items: center; gap: 20px;">
+          <!-- Botones a la izquierda (uno arriba del otro) -->
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <button 
+              class="mini-btn" 
+              (click)="resetUserConfig()" 
+              title="Restablecer mi configuración"
+              style="background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 6px 8px; font-size: 14px; cursor: pointer; transition: all 0.2s;">
+              🔄
             </button>
-            <button class="config-btn" (click)="toggleConfig()">
-              <span class="config-icon">⚙️</span>
-              Configurar Columnas
+            <button 
+              class="mini-btn" 
+              (click)="toggleConfig()"
+              title="Configurar Columnas"
+              style="background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 6px 8px; font-size: 14px; cursor: pointer; transition: all 0.2s;">
+              ⚙️
             </button>
+          </div>
+          
+          <!-- Filtro después de los botones -->
+          <div style="position: relative; display: flex; align-items: center;">
+            <input 
+              type="text" 
+              placeholder="🔍 Buscar empleados..." 
+              [(ngModel)]="globalFilter"
+              style="padding: 10px 15px; font-size: 16px; width: 250px; border: 1px solid #ccc; border-radius: 4px; outline: none; transition: border-color 0.3s;"
+            />
           </div>
         </div>
 
@@ -57,11 +79,11 @@ import { TableConfigComponent } from '../table-config/table-config.component';
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let employee of employees">
-                <td *ngFor="let column of visibleColumns">
-                  {{ getEmployeeValue(employee, column.key) }}
-                </td>
-              </tr>
+                <tr *ngFor="let employee of filteredEmployees">
+                  <td *ngFor="let column of visibleColumns">
+                    {{ getEmployeeValue(employee, column.key) }}
+                  </td>
+                </tr>
             </tbody>
           </table>
         </div>
@@ -80,6 +102,7 @@ export class DashboardComponent implements OnInit {
   employees: Employee[] = [];
   columns: ColumnConfig[] = [];
   showConfig = false;
+  globalFilter: string = '';
 
   ngOnInit(): void {
     if (!this.authService.isAuthenticated()) {
@@ -93,6 +116,21 @@ export class DashboardComponent implements OnInit {
 
   get visibleColumns(): ColumnConfig[] {
     return this.columns.filter(col => col.visible);
+  }
+
+  get filteredEmployees(): Employee[] {
+    if (!this.globalFilter.trim()) {
+      return this.employees;
+    }
+    const filter = this.globalFilter.trim().toLowerCase();
+    return this.employees.filter(emp =>
+      this.visibleColumns.some(col => {
+        // Obtener el valor formateado para mostrar
+        const displayValue = this.getEmployeeValue(emp, col.key);
+        const searchValue = String(displayValue ?? '').toLowerCase();
+        return searchValue.includes(filter);
+      })
+    );
   }
 
   loadData(): void {
