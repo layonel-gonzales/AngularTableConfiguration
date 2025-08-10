@@ -717,11 +717,11 @@
   }
 }
 
-/* ===== ESTILOS ESPECÍFICOS PARA PAGINACIÓN STICKY EN MÓVILES ===== */
+/* ===== ESTILOS ESPECÍFICOS PARA PAGINACIÓN PEGADA A LA TABLA EN MÓVILES ===== */
 
-/* Aplicar paginación sticky solo en pantallas móviles */
+/* Aplicar paginación pegada solo en pantallas móviles */
 @media (max-width: 768px) {
-  /* Contenedor principal de la tabla con overflow para scroll horizontal */
+  /* Contenedor principal de la tabla */
   .table-section {
     position: relative !important;
     width: 100% !important;
@@ -729,25 +729,26 @@
   
   /* Contenedor de tabla con scroll horizontal independiente */
   .table-wrapper {
-    margin-bottom: 0 !important; /* Remover margen ya que usamos sticky */
+    margin-bottom: 0 !important;
     overflow-x: auto !important;
-    /* Crear contexto de scroll independiente */
     position: relative !important;
+    /* Crear una sombra inferior para indicar que hay más contenido */
+    box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.1) !important;
   }
   
-  /* Hacer la paginación sticky dentro de la tabla */
+  /* Hacer la paginación pegada directamente a la tabla (no fija) */
   .pagination-wrapper {
-    position: sticky !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    z-index: 100 !important;
+    position: relative !important; /* CAMBIO: relative en lugar de sticky */
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    z-index: 10 !important;
     width: 100% !important;
     border-radius: 0 !important;
     border: none !important;
     border-top: 2px solid var(--border-medium) !important;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15) !important;
-    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: none !important; /* No necesario sin position fixed/sticky */
     background: rgba(255, 255, 255, 0.98) !important;
     /* Asegurar que siga el contenido de la tabla */
     margin-top: 0 !important;
@@ -756,7 +757,7 @@
   .pagination-container {
     padding: 12px 20px !important;
     border-top: none !important;
-    background: transparent !important;
+    background: white !important; /* Fondo sólido para mejor legibilidad */
     margin-top: 0 !important;
   }
   
