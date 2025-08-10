@@ -73,78 +73,81 @@ import { TableConfigComponent } from '../table-config/table-config.component';
           (closeConfig)="toggleConfig()">
         </app-table-config>
 
-        <!-- CONTENEDOR DE TABLA CON SCROLL HORIZONTAL -->
-        <div class="table-wrapper">
-          <div class="table-container">
-            <div class="table-scroll-container">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th *ngFor="let column of visibleColumns">{{ column.label }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let employee of paginatedEmployees">
-                      <td *ngFor="let column of visibleColumns">
-                        {{ getEmployeeValue(employee, column.key) }}
-                      </td>
+        <!-- SECCIÓN DE TABLA CON POSICIÓN RELATIVA PARA PAGINACIÓN FIJA -->
+        <div class="table-section">
+          <!-- CONTENEDOR DE TABLA CON SCROLL HORIZONTAL -->
+          <div class="table-wrapper">
+            <div class="table-container">
+              <div class="table-scroll-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th *ngFor="let column of visibleColumns">{{ column.label }}</th>
                     </tr>
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let employee of paginatedEmployees">
+                        <td *ngFor="let column of visibleColumns">
+                          {{ getEmployeeValue(employee, column.key) }}
+                        </td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- PAGINACIÓN SEPARADA Y FIJA EN MÓVILES -->
-        <div class="pagination-wrapper" *ngIf="totalItems > 0">
-          <div class="pagination-container">
-            <!-- Información de resultados -->
-            <div class="pagination-info">
-              <span>Mostrando {{ startItem }} - {{ endItem }} de {{ totalItems }} empleados</span>
-            </div>
-
-            <!-- Controles de paginación -->
-            <div class="pagination-controls">
-              <!-- Selector de elementos por página -->
-              <div class="page-size-selector">
-                <label>Mostrar:</label>
-                <select [(ngModel)]="itemsPerPage" (change)="changePageSize(itemsPerPage)" class="page-size-select">
-                  <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
-                </select>
+          <!-- PAGINACIÓN SEPARADA Y FIJA EN MÓVILES -->
+          <div class="pagination-wrapper" *ngIf="totalItems > 0">
+            <div class="pagination-container">
+              <!-- Información de resultados -->
+              <div class="pagination-info">
+                <span>Mostrando {{ startItem }} - {{ endItem }} de {{ totalItems }} empleados</span>
               </div>
 
-              <!-- Navegación de páginas -->
-              <div class="page-navigation" *ngIf="totalPages > 1">
-                <!-- Botón anterior -->
-                <button 
-                  class="page-btn page-btn-nav" 
-                  [disabled]="currentPage === 1"
-                  (click)="previousPage()"
-                  title="Página anterior">
-                  ⟨
-                </button>
+              <!-- Controles de paginación -->
+              <div class="pagination-controls">
+                <!-- Selector de elementos por página -->
+                <div class="page-size-selector">
+                  <label>Mostrar:</label>
+                  <select [(ngModel)]="itemsPerPage" (change)="changePageSize(itemsPerPage)" class="page-size-select">
+                    <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+                  </select>
+                </div>
 
-                <!-- Números de página -->
-                <ng-container *ngFor="let pageNum of pageNumbers">
+                <!-- Navegación de páginas -->
+                <div class="page-navigation" *ngIf="totalPages > 1">
+                  <!-- Botón anterior -->
                   <button 
-                    *ngIf="typeof pageNum === 'number'"
-                    class="page-btn"
-                    [class.active]="pageNum === currentPage"
-                    (click)="goToPage(pageNum)"
-                    [title]="'Página ' + pageNum">
-                    {{ pageNum }}
+                    class="page-btn page-btn-nav" 
+                    [disabled]="currentPage === 1"
+                    (click)="previousPage()"
+                    title="Página anterior">
+                    ⟨
                   </button>
-                  <span *ngIf="typeof pageNum === 'string'" class="page-dots">{{ pageNum }}</span>
-                </ng-container>
 
-                <!-- Botón siguiente -->
-                <button 
-                  class="page-btn page-btn-nav" 
-                  [disabled]="currentPage === totalPages"
-                  (click)="nextPage()"
-                  title="Página siguiente">
-                  ⟩
-                </button>
+                  <!-- Números de página -->
+                  <ng-container *ngFor="let pageNum of pageNumbers">
+                    <button 
+                      *ngIf="typeof pageNum === 'number'"
+                      class="page-btn"
+                      [class.active]="pageNum === currentPage"
+                      (click)="goToPage(pageNum)"
+                      [title]="'Página ' + pageNum">
+                      {{ pageNum }}
+                    </button>
+                    <span *ngIf="typeof pageNum === 'string'" class="page-dots">{{ pageNum }}</span>
+                  </ng-container>
+
+                  <!-- Botón siguiente -->
+                  <button 
+                    class="page-btn page-btn-nav" 
+                    [disabled]="currentPage === totalPages"
+                    (click)="nextPage()"
+                    title="Página siguiente">
+                    ⟩
+                  </button>
+                </div>
               </div>
             </div>
           </div>
