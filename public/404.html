@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Angular Table App</title>
+  <base href="/AngularTableConfiguration/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aplicación Angular con tabla configurable">
+  <meta name="theme-color" content="#1976d2">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .container {
+      text-align: center;
+      color: white;
+      padding: 40px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+  <script>
+    // Redirect all routes to hash routing for GitHub Pages
+    const path = window.location.pathname.replace('/AngularTableConfiguration', '');
+    if (path && path !== '/') {
+      window.location.replace('/AngularTableConfiguration/#' + path);
+    } else {
+      window.location.replace('/AngularTableConfiguration/#/login');
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="loading"></div>
+    <h2>Cargando Angular Table App...</h2>
+    <p>Redirigiendo automáticamente...</p>
+  </div>
+</body>
+</html>

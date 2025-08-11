@@ -56,7 +56,7 @@
             },
             "github": {
               "browser": "src/main.github.ts",
-              "outputPath": "dist/angular-table-app/browser",
+              "outputPath": "dist/github-pages",
               "index": "src/index.html",
               "polyfills": ["zone.js"],
               "tsConfig": "tsconfig.app.json",
