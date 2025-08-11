@@ -205,53 +205,7 @@
   border-color: var(--border-medium);
 }
 
-/* Responsividad */
-@media (max-width: 768px) {
-  .controls-filter-container {
-    flex-direction: column;
-    gap: 15px;
-    padding: 15px;
-  }
-  
-  .control-buttons {
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .filter-container {
-    width: 100%;
-  }
-  
-  .dashboard-main {
-    padding: 20px 15px;
-  }
-}
 
-@media (max-width: 480px) {
-  .header-content {
-    padding: 15px 20px;
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-  }
-  
-  .control-btn {
-    min-width: 40px;
-    min-height: 40px;
-    padding: 10px;
-  }
-  
-  .filter-input {
-    padding: 14px 18px 14px 45px;
-    font-size: 14px;
-  }
-  
-  .filter-icon {
-    left: 14px;
-    font-size: 16px;
-  }
-}
 
 
 
@@ -491,133 +445,7 @@
   height: 36px;
 }
 
-/* ==== RESPONSIVE DESIGN ==== */
-@media (max-width: 768px) {
-  .dashboard-main {
-    padding: 20px 15px;
-  }
-  
-  .header-content {
-    padding: 15px 20px;
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-  }
-  
-  .table-controls {
-    flex-direction: column;
-    gap: 15px;
-    align-items: flex-start;
-  }
-  
-  .table-controls h2 {
-    font-size: 20px;
-  }
-  
-  .controls-buttons {
-    align-self: stretch;
-    justify-content: center;
-  }
-  
-  .config-btn,
-  .reset-btn {
-    flex: 1;
-    justify-content: center;
-  }
-  
-  .table-container {
-    overflow-x: auto;
-  }
-  
-  .data-table {
-    min-width: 800px;
-    table-layout: auto;
-  }
-  
-  .data-table th,
-  .data-table td {
-    padding: 12px 15px;
-    font-size: 13px;
-    white-space: nowrap;
-  }
-  
-  .table-pagination {
-    padding: 12px 16px;
-  }
-  
-  .pagination-controls {
-    gap: 12px;
-    margin-bottom: 8px;
-  }
-  
-  .nav-btn {
-    min-width: 32px;
-    height: 32px;
-    font-size: 13px;
-  }
-  
-  .pagination-nav {
-    gap: 4px;
-  }
-  
-  .selector-label,
-  .selector-input {
-    font-size: 13px;
-  }
-  
-  .pagination-info {
-    font-size: 13px;
-  }
-}
 
-@media (max-width: 480px) {
-  .dashboard-main {
-    padding: 15px 10px;
-  }
-  
-  .header-content h1 {
-    font-size: 22px;
-  }
-  
-  .user-info {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .table-controls h2 {
-    font-size: 18px;
-  }
-  
-  .data-table th,
-  .data-table td {
-    padding: 10px 12px;
-    font-size: 12px;
-    white-space: nowrap;
-  }
-  
-  .table-pagination {
-    padding: 10px 12px;
-  }
-  
-  .pagination-controls {
-    gap: 8px;
-  }
-  
-  .nav-btn {
-    min-width: 28px;
-    height: 28px;
-    font-size: 12px;
-  }
-  
-  .pagination-nav {
-    gap: 2px;
-  }
-  
-  .selector-input {
-    min-width: 50px;
-    padding: 4px 8px;
-  }
-}
 
 /* ==== FILTRO GLOBAL ==== */
 .global-filter-container {
@@ -666,36 +494,7 @@
   transform: scale(0.95);
 }
 
-@media (max-width: 768px) {
-  .global-filter-container {
-    margin: 15px 0;
-    padding: 20px;
-  }
-  
-  .global-filter-input {
-    width: 100%;
-    font-size: 14px;
-    padding: 10px 14px;
-  }
-  
-  .filter-results-info {
-    font-size: 12px;
-  }
-  
-  .filter-controls-row {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .filter-controls-row > div:first-child {
-    order: 2;
-  }
-  
-  .filter-controls-row > div:last-child {
-    order: 1;
-    justify-content: center;
-  }
-}
+
 
 /* ===== ESTILOS PARA HEADERS DE TABLA BLANCOS ===== */
 .data-table th {
@@ -849,46 +648,176 @@
   font-weight: 600;
 }
 
-/* Responsivo para funcionalidades */
-@media (max-width: 768px) {
+/* ==== MEDIA QUERY PARA ELEMENTOS MÁS PEQUEÑOS ==== */
+@media (max-width: 480px) {
+  /* Header más compacto */
+  .header-content {
+    padding: 12px 15px;
+  }
+  
+  .header-content h1 {
+    font-size: 20px;
+  }
+  
+  .user-info {
+    gap: 12px;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .user-info span {
+    font-size: 13px;
+  }
+  
+  .logout-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  /* Dashboard main más compacto */
+  .dashboard-main {
+    padding: 12px 8px;
+  }
+  
+  /* Controles de tabla más pequeños */
+  .table-controls h2 {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .user-config-info {
+    font-size: 11px;
+  }
+  
+  .controls-filter-container {
+    gap: 10px;
+  }
+  
+  .control-buttons {
+    gap: 8px;
+  }
+  
+  .control-btn {
+    min-width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+  
+  /* Filtro global más compacto */
+  .global-filter-container {
+    padding: 15px;
+    margin: 15px 0;
+  }
+  
+  .global-filter-input {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  
+  .filter-results-info {
+    font-size: 11px;
+  }
+  
+  /* Tabla más compacta */
+  .data-table th,
+  .data-table td {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+  
+  .data-table th {
+    font-size: 11px;
+  }
+  
+  /* Paginación más pequeña */
+  .table-pagination {
+    padding: 8px 10px;
+  }
+  
+  .pagination-controls {
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  
+  .nav-btn {
+    min-width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+  
+  .pagination-nav {
+    gap: 1px;
+  }
+  
+  .selector-label {
+    font-size: 11px;
+  }
+  
+  .selector-input {
+    padding: 3px 6px;
+    font-size: 10px;
+    min-width: 40px;
+  }
+  
+  .pagination-info {
+    font-size: 10px;
+  }
+  
+  .page-dots {
+    font-size: 10px;
+    height: 24px;
+    padding: 0 4px;
+  }
+  
+  /* Features section más compacta */
   .features-section {
-    margin-top: 30px;
-    padding: 30px 15px;
+    padding: 20px 10px;
+    margin-top: 20px;
   }
   
   .features-title {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
   }
   
   .features-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 15px;
   }
   
   .feature-card {
-    padding: 25px;
-  }
-  
-  .feature-card.featured {
-    transform: none;
-  }
-  
-  .feature-icon {
-    font-size: 2.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .features-title {
-    font-size: 1.75rem;
-  }
-  
-  .feature-card {
-    padding: 20px;
+    padding: 15px;
   }
   
   .feature-card h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .feature-card p {
+    font-size: 12px;
+    margin-bottom: 15px;
+    line-height: 1.4;
+  }
+  
+  .feature-card li {
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+  
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .features-footer {
+    padding: 15px;
+    margin-top: 15px;
+  }
+  
+  .features-footer p {
+    font-size: 12px;
+    line-height: 1.4;
   }
 }
+
+
