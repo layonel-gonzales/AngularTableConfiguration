@@ -33,7 +33,13 @@ jobs:
         run: |
           npm run build:github
           ls -la dist/
-          ls -la dist/angular-table-app/
+          ls -la dist/github-pages/
+          ls -la dist/github-pages/browser/
+          # Ensure index.html exists for GitHub Pages
+          if [ ! -f dist/github-pages/browser/index.html ] || [ ! -s dist/github-pages/browser/index.html ]; then
+            echo "Copying index.github.html to index.html"
+            cp dist/github-pages/browser/index.github.html dist/github-pages/browser/index.html
+          fi
           
       - name: Setup Pages
         uses: actions/configure-pages@v4
