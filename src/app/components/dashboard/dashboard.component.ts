@@ -100,22 +100,9 @@ import { TableConfigComponent } from '../table-config/table-config.component';
           <!-- PAGINACIÓN SEPARADA Y FIJA EN MÓVILES -->
           <div class="pagination-wrapper" *ngIf="totalItems > 0">
             <div class="pagination-container">
-              <!-- Información de resultados -->
-              <div class="pagination-info">
-                <span>Mostrando {{ startItem }} - {{ endItem }} de {{ totalItems }} empleados</span>
-              </div>
-
-              <!-- Controles de paginación -->
-              <div class="pagination-controls">
-                <!-- Selector de elementos por página -->
-                <div class="page-size-selector">
-                  <label>Mostrar:</label>
-                  <select [(ngModel)]="itemsPerPage" (change)="changePageSize(itemsPerPage)" class="page-size-select">
-                    <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
-                  </select>
-                </div>
-
-                <!-- Navegación de páginas -->
+              <!-- Primera línea: Botones izquierda, Selector derecha -->
+              <div class="pagination-top-row">
+                <!-- Navegación de páginas (IZQUIERDA) -->
                 <div class="page-navigation" *ngIf="totalPages > 1">
                   <!-- Botón anterior -->
                   <button 
@@ -148,10 +135,134 @@ import { TableConfigComponent } from '../table-config/table-config.component';
                     ⟩
                   </button>
                 </div>
+
+                <!-- Selector de elementos por página (DERECHA) -->
+                <div class="page-size-selector">
+                  <label>Mostrar:</label>
+                  <select [(ngModel)]="itemsPerPage" (change)="changePageSize(itemsPerPage)" class="page-size-select">
+                    <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Segunda línea: Información de resultados (IZQUIERDA) -->
+              <div class="pagination-bottom-row">
+                <div class="pagination-info">
+                  <span>Mostrando {{ startItem }} - {{ endItem }} de {{ totalItems }} empleados</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- SECCIÓN DE FUNCIONALIDADES DE LA DEMO -->
+        <section class="features-section">
+          <div class="features-container">
+            <h2 class="features-title">🚀 Funcionalidades de esta Demo</h2>
+            <div class="features-grid">
+              
+              <!-- Funcionalidad destacada: Configuración por usuario -->
+              <div class="feature-card featured">
+                <div class="feature-icon">👤</div>
+                <h3>Configuración Personalizada por Usuario</h3>
+                <p>
+                  <strong>Capacidad única de seleccionar y guardar configuración de columnas por usuario.</strong>
+                  Cada usuario puede personalizar qué columnas ver y el sistema recordará sus preferencias 
+                  automáticamente usando cookies del navegador.
+                </p>
+                <ul>
+                  <li>✅ Mostrar/Ocultar columnas específicas</li>
+                  <li>✅ Configuración persistente por usuario</li>
+                  <li>✅ Restaurar configuración por defecto</li>
+                </ul>
+              </div>
+
+              <!-- Filtro global -->
+              <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Filtro Global Inteligente</h3>
+                <p>
+                  <strong>Capacidad de filtrar información desde un solo textbox con búsqueda en todas las columnas.</strong>
+                  Sistema de búsqueda avanzado que encuentra coincidencias en tiempo real.
+                </p>
+                <ul>
+                  <li>✅ Búsqueda en todas las columnas simultáneamente</li>
+                  <li>✅ Filtrado en tiempo real</li>
+                  <li>✅ Interfaz responsiva que ocupa todo el espacio</li>
+                </ul>
+              </div>
+
+              <!-- Paginación -->
+              <div class="feature-card">
+                <div class="feature-icon">📄</div>
+                <h3>Paginación Vanguardista</h3>
+                <p>
+                  <strong>Sistema de paginación moderno con diseño de vanguardia.</strong>
+                  Implementación avanzada con controles intuitivos y optimización móvil.
+                </p>
+                <ul>
+                  <li>✅ Diseño moderno con efectos visuales</li>
+                  <li>✅ Navegación inteligente de páginas</li>
+                  <li>✅ Optimizada para dispositivos móviles</li>
+                  <li>✅ Selector dinámico de elementos por página</li>
+                </ul>
+              </div>
+
+              <!-- Responsividad -->
+              <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Diseño Totalmente Responsivo</h3>
+                <p>
+                  Adaptación perfecta a cualquier dispositivo con scroll horizontal 
+                  independiente para tablas con muchas columnas.
+                </p>
+                <ul>
+                  <li>✅ Scroll horizontal independiente</li>
+                  <li>✅ Paginación fija en móviles</li>
+                  <li>✅ Controles adaptables</li>
+                </ul>
+              </div>
+
+              <!-- Persistencia -->
+              <div class="feature-card">
+                <div class="feature-icon">💾</div>
+                <h3>Persistencia de Datos</h3>
+                <p>
+                  Sistema de almacenamiento local que mantiene las preferencias 
+                  del usuario entre sesiones.
+                </p>
+                <ul>
+                  <li>✅ Configuraciones guardadas en cookies</li>
+                  <li>✅ Persistencia por usuario</li>
+                  <li>✅ Recuperación automática</li>
+                </ul>
+              </div>
+
+              <!-- Autenticación -->
+              <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3>Sistema de Autenticación</h3>
+                <p>
+                  Manejo de usuarios con autenticación simple y gestión de sesiones.
+                </p>
+                <ul>
+                  <li>✅ Login/Logout funcional</li>
+                  <li>✅ Gestión de sesiones</li>
+                  <li>✅ Protección de rutas</li>
+                </ul>
+              </div>
+
+            </div>
+
+            <!-- Pie de sección -->
+            <div class="features-footer">
+              <p>
+                <strong>💡 Demo Técnica:</strong> Esta aplicación demuestra capacidades avanzadas 
+                de Angular con componentes standalone, gestión de estado, y diseño responsivo moderno.
+              </p>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   `,

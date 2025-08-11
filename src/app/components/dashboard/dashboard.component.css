@@ -545,14 +545,30 @@
 /* ===== ESTILOS DE PAGINACIÓN MODERNA ===== */
 .pagination-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 12px;
   padding: 20px;
   margin-top: 20px;
   border-top: 1px solid var(--border-light);
   background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%);
   border-radius: 0 0 var(--radius-xl) var(--radius-xl);
   box-shadow: var(--shadow-sm);
+}
+
+/* Primera línea: botones izquierda, selector derecha */
+.pagination-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Segunda línea: info abajo a la izquierda */
+.pagination-bottom-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
 }
 
 .pagination-info {
@@ -680,19 +696,36 @@
 /* Responsive para paginación */
 @media (max-width: 768px) {
   .pagination-container {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
+    gap: 12px;
+    padding: 15px;
   }
   
-  .pagination-controls {
-    flex-direction: column;
-    gap: 15px;
+  /* En móviles, mantener el layout pero ajustar tamaños */
+  .pagination-top-row {
+    flex-direction: row; /* Mantener en línea horizontal */
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between; /* Mantener separación izquierda-derecha */
   }
   
+  /* El selector se mantiene a la derecha */
+  .page-size-selector {
+    order: 2; /* Asegurar que esté a la derecha */
+    flex-shrink: 0;
+  }
+  
+  /* La navegación se mantiene a la izquierda */
   .page-navigation {
-    flex-wrap: wrap;
-    justify-content: center;
+    order: 1; /* Asegurar que esté a la izquierda */
+    flex-wrap: nowrap; /* No envolver para mantener en línea */
+    justify-content: flex-start; /* Alinear a la izquierda */
+    overflow-x: auto; /* Permitir scroll horizontal si es necesario */
+  }
+  
+  /* La info se mantiene a la izquierda en segunda línea */
+  .pagination-bottom-row {
+    justify-content: flex-start; /* Alinear a la izquierda */
+    text-align: left; /* Texto alineado a la izquierda */
   }
   
   .page-btn {
@@ -759,28 +792,38 @@
     border-top: none !important;
     background: white !important; /* Fondo sólido para mejor legibilidad */
     margin-top: 0 !important;
+    gap: 8px !important;
   }
   
-  /* Optimizar controles de paginación para móviles */
-  .pagination-controls {
+  /* Optimizar primera línea para móviles */
+  .pagination-top-row {
+    flex-direction: column !important;
     gap: 10px !important;
+    align-items: center !important;
+  }
+  
+  /* En esta versión móvil específica, el selector va arriba */
+  .page-size-selector {
+    order: -1 !important;
+    font-size: 11px !important;
+  }
+  
+  /* Navegación va después */
+  .page-navigation {
+    order: 1 !important;
+    gap: 4px !important;
     flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+  
+  /* Info centrada abajo */
+  .pagination-bottom-row {
     justify-content: center !important;
   }
   
   .pagination-info {
     font-size: 11px !important;
     text-align: center !important;
-    margin-bottom: 8px !important;
-  }
-  
-  .page-size-selector {
-    order: 2 !important;
-  }
-  
-  .page-navigation {
-    order: 1 !important;
-    gap: 4px !important;
   }
   
   .page-btn {
@@ -804,15 +847,35 @@
   
   .pagination-container {
     padding: 10px 15px !important;
+    gap: 6px !important;
   }
   
-  .pagination-controls {
-    flex-direction: column !important;
-    gap: 8px !important;
+  /* Primera línea más compacta pero mantiene layout horizontal */
+  .pagination-top-row {
+    flex-direction: row !important; /* Mantener horizontal incluso en móviles pequeños */
+    gap: 5px !important;
+    justify-content: space-between !important;
   }
   
+  /* La navegación más compacta */
+  .page-navigation {
+    gap: 2px !important;
+    overflow-x: auto !important;
+  }
+  
+  /* Segunda línea sigue a la izquierda */
+  .pagination-bottom-row {
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+  
+  /* Selector más pequeño */
+  .page-size-selector {
+    font-size: 10px !important;
+  }
+  
+  /* Info más pequeña */
   .pagination-info {
-    order: 3 !important;
     font-size: 10px !important;
   }
   
@@ -825,5 +888,201 @@
   .page-size-select {
     padding: 4px 8px !important;
     font-size: 11px !important;
+  }
+}
+
+/* ===== ESTILOS PARA HEADERS DE TABLA BLANCOS ===== */
+.data-table th {
+  color: white !important;
+  background: var(--primary-color) !important;
+  font-weight: 600 !important;
+  text-align: left !important;
+  padding: 16px !important;
+  border-bottom: 2px solid var(--border-medium) !important;
+}
+
+.data-table thead {
+  background: var(--primary-color) !important;
+}
+
+.data-table thead th {
+  background: var(--primary-color) !important;
+  color: white !important;
+  font-size: 14px !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+}
+
+/* ===== ESTILOS PARA SECCIÓN DE FUNCIONALIDADES ===== */
+.features-section {
+  margin-top: 40px;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
+}
+
+.features-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.features-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.feature-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: var(--transition-normal);
+  border: 1px solid var(--border-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+}
+
+.feature-card.featured {
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.15);
+  transform: scale(1.02);
+}
+
+.feature-card.featured::before {
+  height: 6px;
+  background: linear-gradient(90deg, #ffd700, #ff6b6b, var(--primary-color));
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.12);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.feature-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.feature-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.feature-card strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.feature-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feature-card li {
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-left: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.features-footer {
+  text-align: center;
+  padding: 25px;
+  background: white;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  margin-top: 20px;
+}
+
+.features-footer p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.features-footer strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Responsivo para funcionalidades */
+@media (max-width: 768px) {
+  .features-section {
+    margin-top: 30px;
+    padding: 30px 15px;
+  }
+  
+  .features-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .feature-card {
+    padding: 25px;
+  }
+  
+  .feature-card.featured {
+    transform: none;
+  }
+  
+  .feature-icon {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .features-title {
+    font-size: 1.75rem;
+  }
+  
+  .feature-card {
+    padding: 20px;
+  }
+  
+  .feature-card h3 {
+    font-size: 1.1rem;
   }
 }
