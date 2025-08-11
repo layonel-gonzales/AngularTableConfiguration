@@ -97,60 +97,53 @@ import { TableConfigComponent } from '../table-config/table-config.component';
             </div>
           </div>
 
-          <!-- PAGINACIÓN SEPARADA Y FIJA EN MÓVILES -->
-          <div class="pagination-wrapper" *ngIf="totalItems > 0">
-            <div class="pagination-container">
-              <!-- Primera línea: Botones izquierda, Selector derecha -->
-              <div class="pagination-top-row">
-                <!-- Navegación de páginas (IZQUIERDA) -->
-                <div class="page-navigation" *ngIf="totalPages > 1">
-                  <!-- Botón anterior -->
+          <!-- PAGINACIÓN OPTIMIZADA -->
+          <div class="table-pagination" *ngIf="totalItems > 0">
+            <!-- Controles de paginación: Botones (izq) y Selector (der) -->
+            <div class="pagination-controls">
+              <!-- Navegación de páginas (IZQUIERDA) -->
+              <div class="pagination-nav" *ngIf="totalPages > 1">
+                <button 
+                  class="nav-btn" 
+                  [disabled]="currentPage === 1"
+                  (click)="previousPage()"
+                  title="Página anterior">
+                  ‹
+                </button>
+
+                <ng-container *ngFor="let pageNum of pageNumbers">
                   <button 
-                    class="page-btn page-btn-nav" 
-                    [disabled]="currentPage === 1"
-                    (click)="previousPage()"
-                    title="Página anterior">
-                    ⟨
+                    *ngIf="typeof pageNum === 'number'"
+                    class="nav-btn"
+                    [class.nav-btn--active]="pageNum === currentPage"
+                    (click)="goToPage(pageNum)"
+                    [title]="'Página ' + pageNum">
+                    {{ pageNum }}
                   </button>
+                  <span *ngIf="typeof pageNum === 'string'" class="page-dots">{{ pageNum }}</span>
+                </ng-container>
 
-                  <!-- Números de página -->
-                  <ng-container *ngFor="let pageNum of pageNumbers">
-                    <button 
-                      *ngIf="typeof pageNum === 'number'"
-                      class="page-btn"
-                      [class.active]="pageNum === currentPage"
-                      (click)="goToPage(pageNum)"
-                      [title]="'Página ' + pageNum">
-                      {{ pageNum }}
-                    </button>
-                    <span *ngIf="typeof pageNum === 'string'" class="page-dots">{{ pageNum }}</span>
-                  </ng-container>
-
-                  <!-- Botón siguiente -->
-                  <button 
-                    class="page-btn page-btn-nav" 
-                    [disabled]="currentPage === totalPages"
-                    (click)="nextPage()"
-                    title="Página siguiente">
-                    ⟩
-                  </button>
-                </div>
-
-                <!-- Selector de elementos por página (DERECHA) -->
-                <div class="page-size-selector">
-                  <label>Mostrar:</label>
-                  <select [(ngModel)]="itemsPerPage" (change)="changePageSize(itemsPerPage)" class="page-size-select">
-                    <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
-                  </select>
-                </div>
+                <button 
+                  class="nav-btn" 
+                  [disabled]="currentPage === totalPages"
+                  (click)="nextPage()"
+                  title="Página siguiente">
+                  ›
+                </button>
               </div>
 
-              <!-- Segunda línea: Información de resultados (IZQUIERDA) -->
-              <div class="pagination-bottom-row">
-                <div class="pagination-info">
-                  <span>Mostrando {{ startItem }} - {{ endItem }} de {{ totalItems }} empleados</span>
-                </div>
+              <!-- Selector de elementos por página (DERECHA) -->
+              <div class="pagination-selector">
+                <label class="selector-label">Mostrar:</label>
+                <select [(ngModel)]="itemsPerPage" (change)="changePageSize(itemsPerPage)" class="selector-input">
+                  <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+                </select>
               </div>
+            </div>
+
+            <!-- Información de resultados -->
+            <div class="pagination-info">
+              Mostrando {{ startItem }} - {{ endItem }} de {{ totalItems }} empleados
             </div>
           </div>
         </div>

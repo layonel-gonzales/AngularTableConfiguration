@@ -287,7 +287,6 @@
 
 .data-table tbody tr:hover {
   background-color: var(--bg-tertiary);
-  transform: scale(1.001);
 }
 
 .data-table tbody tr:last-child td {
@@ -372,30 +371,127 @@
   border-radius: 4px;
 }
 
-.table-scroll-container::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-color);
+/* ==== TABLA SIN SEPARACIÓN ==== */
+.table-wrapper {
+  margin-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
-/* Contenedor de paginación separado */
-.pagination-wrapper {
-  width: 100%;
-  background: var(--bg-primary);
-  border: 1px solid var(--border-light);
-  border-top: none;
-  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-  box-shadow: var(--shadow-lg);
-}
-
-/* Tabla con ancho mínimo para scroll horizontal */
 .data-table {
   width: 100%;
-  min-width: 800px; /* Ancho mínimo para forzar scroll horizontal en móviles */
+  min-width: 800px;
   border-collapse: collapse;
   font-size: 14px;
   table-layout: auto;
 }
 
-/* Responsive design */
+/* ==== PAGINACIÓN OPTIMIZADA ==== */
+.table-pagination {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 16px 20px;
+  margin-top: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 16px;
+}
+
+.pagination-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 1 auto;
+}
+
+.pagination-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.pagination-info {
+  color: #6b7280;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ==== BOTONES DE NAVEGACIÓN ==== */
+.nav-btn {
+  min-width: 36px;
+  height: 36px;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #374151;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.nav-btn--active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ==== SELECTOR DE CANTIDAD ==== */
+.selector-label {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.selector-input {
+  padding: 6px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: white;
+  font-size: 14px;
+  min-width: 60px;
+}
+
+.selector-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.page-dots {
+  color: #6c757d;
+  font-weight: 600;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  height: 36px;
+}
+
+/* ==== RESPONSIVE DESIGN ==== */
 @media (max-width: 768px) {
   .dashboard-main {
     padding: 20px 15px;
@@ -434,7 +530,7 @@
   }
   
   .data-table {
-    min-width: 800px; /* Ancho mínimo aumentado para mejor legibilidad */
+    min-width: 800px;
     table-layout: auto;
   }
   
@@ -443,6 +539,34 @@
     padding: 12px 15px;
     font-size: 13px;
     white-space: nowrap;
+  }
+  
+  .table-pagination {
+    padding: 12px 16px;
+  }
+  
+  .pagination-controls {
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  
+  .nav-btn {
+    min-width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+  
+  .pagination-nav {
+    gap: 4px;
+  }
+  
+  .selector-label,
+  .selector-input {
+    font-size: 13px;
+  }
+  
+  .pagination-info {
+    font-size: 13px;
   }
 }
 
@@ -470,53 +594,70 @@
     font-size: 12px;
     white-space: nowrap;
   }
+  
+  .table-pagination {
+    padding: 10px 12px;
+  }
+  
+  .pagination-controls {
+    gap: 8px;
+  }
+  
+  .nav-btn {
+    min-width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+  
+  .pagination-nav {
+    gap: 2px;
+  }
+  
+  .selector-input {
+    min-width: 50px;
+    padding: 4px 8px;
+  }
 }
 
-/* Estilos para el filtro global - SIMPLE Y VISIBLE */
+/* ==== FILTRO GLOBAL ==== */
 .global-filter-container {
-  margin: 30px 0 !important;
-  padding: 30px !important;
-  background: red !important;
-  border: 5px solid blue !important;
+  margin: 30px 0;
+  padding: 30px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
   text-align: center;
-  width: 100% !important;
-  box-sizing: border-box !important;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .global-filter-input {
-  width: 80% !important;
-  padding: 20px !important;
-  font-size: 20px !important;
-  border: 3px solid green !important;
-  background: yellow !important;
-  color: black !important;
+  width: 80%;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  background: white;
+  color: #374151;
+  transition: all 0.15s ease;
+}
+
+.global-filter-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .filter-results-info {
-  color: white !important;
-  font-size: 18px !important;
-  font-weight: bold !important;
-  margin: 10px 0 !important;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 10px 0;
 }
 
-@media (max-width: 768px) {
-  .global-filter-container {
-    margin: 15px 0;
-  }
-  
-  .global-filter-input {
-    font-size: 14px;
-    padding: 10px 14px;
-  }
-  
-  .filter-results-info {
-    font-size: 12px;
-  }
-}
-
-/* Estilos para los mini-botones de control */
+/* ==== BOTONES DE CONTROL ==== */
 .mini-btn:hover {
-  background-color: #e9ecef !important;
+  background-color: #e9ecef;
   transform: scale(1.05);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -525,8 +666,22 @@
   transform: scale(0.95);
 }
 
-/* Responsive para la barra de filtro y botones */
 @media (max-width: 768px) {
+  .global-filter-container {
+    margin: 15px 0;
+    padding: 20px;
+  }
+  
+  .global-filter-input {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+  
+  .filter-results-info {
+    font-size: 12px;
+  }
+  
   .filter-controls-row {
     flex-direction: column;
     gap: 10px;
@@ -539,355 +694,6 @@
   .filter-controls-row > div:last-child {
     order: 1;
     justify-content: center;
-  }
-}
-
-/* ===== ESTILOS DE PAGINACIÓN MODERNA ===== */
-.pagination-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 20px;
-  margin-top: 20px;
-  border-top: 1px solid var(--border-light);
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%);
-  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-  box-shadow: var(--shadow-sm);
-}
-
-/* Primera línea: botones izquierda, selector derecha */
-.pagination-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-/* Segunda línea: info abajo a la izquierda */
-.pagination-bottom-row {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-}
-
-.pagination-info {
-  color: var(--text-secondary);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.pagination-controls {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.page-size-selector {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-primary);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.page-size-select {
-  padding: 8px 14px;
-  border: 2px solid var(--border-light);
-  border-radius: var(--radius-md);
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-size: 14px;
-  outline: none;
-  transition: var(--transition-normal);
-  cursor: pointer;
-}
-
-.page-size-select:hover {
-  border-color: var(--primary-color);
-}
-
-.page-size-select:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.page-navigation {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.page-btn {
-  min-width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid var(--border-light);
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: var(--transition-normal);
-  position: relative;
-  overflow: hidden;
-}
-
-.page-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-  color: white;
-  border-color: var(--primary-color);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.page-btn.active {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-  color: white;
-  border-color: var(--primary-color);
-  box-shadow: var(--shadow-md);
-}
-
-.page-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  background: var(--bg-tertiary);
-  color: var(--text-muted);
-  border-color: var(--border-light);
-}
-
-.page-btn-nav {
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.page-dots {
-  color: #6c757d;
-  font-weight: 600;
-  padding: 0 8px;
-  display: flex;
-  align-items: center;
-  height: 36px;
-}
-
-/* Efectos adicionales */
-.page-btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: all 0.3s ease;
-}
-
-.page-btn:hover::before {
-  width: 100px;
-  height: 100px;
-}
-
-/* Responsive para paginación */
-@media (max-width: 768px) {
-  .pagination-container {
-    gap: 12px;
-    padding: 15px;
-  }
-  
-  /* En móviles, mantener el layout pero ajustar tamaños */
-  .pagination-top-row {
-    flex-direction: row; /* Mantener en línea horizontal */
-    gap: 10px;
-    align-items: center;
-    justify-content: space-between; /* Mantener separación izquierda-derecha */
-  }
-  
-  /* El selector se mantiene a la derecha */
-  .page-size-selector {
-    order: 2; /* Asegurar que esté a la derecha */
-    flex-shrink: 0;
-  }
-  
-  /* La navegación se mantiene a la izquierda */
-  .page-navigation {
-    order: 1; /* Asegurar que esté a la izquierda */
-    flex-wrap: nowrap; /* No envolver para mantener en línea */
-    justify-content: flex-start; /* Alinear a la izquierda */
-    overflow-x: auto; /* Permitir scroll horizontal si es necesario */
-  }
-  
-  /* La info se mantiene a la izquierda en segunda línea */
-  .pagination-bottom-row {
-    justify-content: flex-start; /* Alinear a la izquierda */
-    text-align: left; /* Texto alineado a la izquierda */
-  }
-  
-  .page-btn {
-    min-width: 32px;
-    height: 32px;
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .pagination-info {
-    font-size: 12px;
-  }
-  
-  .page-size-selector {
-    font-size: 12px;
-  }
-  
-  .page-size-select {
-    padding: 4px 8px;
-    font-size: 12px;
-  }
-}
-
-/* ===== ESTILOS ESPECÍFICOS PARA PAGINACIÓN PEGADA A LA TABLA EN MÓVILES ===== */
-
-/* Aplicar paginación pegada solo en pantallas móviles */
-@media (max-width: 768px) {
-  /* Contenedor principal de la tabla */
-  .table-section {
-    position: relative !important;
-    width: 100% !important;
-  }
-  
-  /* Contenedor de tabla con scroll horizontal independiente */
-  .table-wrapper {
-    margin-bottom: 0 !important;
-    overflow-x: auto !important;
-    position: relative !important;
-    /* Crear una sombra inferior para indicar que hay más contenido */
-    box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.1) !important;
-  }
-  
-  /* Hacer la paginación pegada directamente a la tabla (no fija) */
-  .pagination-wrapper {
-    position: relative !important; /* CAMBIO: relative en lugar de sticky */
-    bottom: auto !important;
-    left: auto !important;
-    right: auto !important;
-    z-index: 10 !important;
-    width: 100% !important;
-    border-radius: 0 !important;
-    border: none !important;
-    border-top: 2px solid var(--border-medium) !important;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1) !important;
-    backdrop-filter: none !important; /* No necesario sin position fixed/sticky */
-    background: rgba(255, 255, 255, 0.98) !important;
-    /* Asegurar que siga el contenido de la tabla */
-    margin-top: 0 !important;
-  }
-  
-  .pagination-container {
-    padding: 12px 20px !important;
-    border-top: none !important;
-    background: white !important; /* Fondo sólido para mejor legibilidad */
-    margin-top: 0 !important;
-    gap: 8px !important;
-  }
-  
-  /* Optimizar primera línea para móviles */
-  .pagination-top-row {
-    flex-direction: column !important;
-    gap: 10px !important;
-    align-items: center !important;
-  }
-  
-  /* En esta versión móvil específica, el selector va arriba */
-  .page-size-selector {
-    order: -1 !important;
-    font-size: 11px !important;
-  }
-  
-  /* Navegación va después */
-  .page-navigation {
-    order: 1 !important;
-    gap: 4px !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-  }
-  
-  /* Info centrada abajo */
-  .pagination-bottom-row {
-    justify-content: center !important;
-  }
-  
-  .pagination-info {
-    font-size: 11px !important;
-    text-align: center !important;
-  }
-  
-  .page-btn {
-    min-width: 32px !important;
-    height: 32px !important;
-    font-size: 11px !important;
-  }
-  
-  .page-btn-nav {
-    font-size: 14px !important;
-    font-weight: 700 !important;
-  }
-}
-
-/* Ajustes específicos para móviles muy pequeños */
-@media (max-width: 480px) {
-  .pagination-wrapper {
-    border-radius: 0 !important;
-    box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1) !important;
-  }
-  
-  .pagination-container {
-    padding: 10px 15px !important;
-    gap: 6px !important;
-  }
-  
-  /* Primera línea más compacta pero mantiene layout horizontal */
-  .pagination-top-row {
-    flex-direction: row !important; /* Mantener horizontal incluso en móviles pequeños */
-    gap: 5px !important;
-    justify-content: space-between !important;
-  }
-  
-  /* La navegación más compacta */
-  .page-navigation {
-    gap: 2px !important;
-    overflow-x: auto !important;
-  }
-  
-  /* Segunda línea sigue a la izquierda */
-  .pagination-bottom-row {
-    justify-content: flex-start !important;
-    text-align: left !important;
-  }
-  
-  /* Selector más pequeño */
-  .page-size-selector {
-    font-size: 10px !important;
-  }
-  
-  /* Info más pequeña */
-  .pagination-info {
-    font-size: 10px !important;
-  }
-  
-  .page-btn {
-    min-width: 30px !important;
-    height: 30px !important;
-    font-size: 10px !important;
-  }
-  
-  .page-size-select {
-    padding: 4px 8px !important;
-    font-size: 11px !important;
   }
 }
 
